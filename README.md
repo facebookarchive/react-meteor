@@ -42,7 +42,6 @@ to your Meteor app:
 ```
 cd path/to/my-app/
 echo react >> .meteor/packages
-mkdir -p packages
 git clone https://github.com/benjamn/meteor-react.git packages/react
 ```
 
