@@ -10,6 +10,34 @@
 
 Players = new Meteor.Collection("players");
 
+var Player = React.createClass({
+  mixins: [MeteorMixin],
+
+  getMeteorState: function() {
+    return {
+      isSelected: Session.equals("selected_player", this.props.id)
+    };
+  },
+
+  select: function() {
+    Session.set("selected_player", this.props.id);
+  },
+
+  render: function() {
+    var className = "player";
+    if (this.state.isSelected) {
+      className += " selected";
+    }
+
+    return (
+      <div className={className} onClick={this.select}>
+        <span class="name">{this.props.name}</span>
+        <span class="score">{this.props.score}</span>
+      </div>
+    );
+  }
+});
+
 if (Meteor.isClient) {
   Template.leaderboard.players = function () {
     return Players.find({}, {sort: {score: -1, name: 1}});
@@ -20,19 +48,9 @@ if (Meteor.isClient) {
     return player && player.name;
   };
 
-  Template.player.selected = function () {
-    return Session.equals("selected_player", this._id) ? "selected" : '';
-  };
-
   Template.leaderboard.events({
     'click input.inc': function () {
       Players.update(Session.get("selected_player"), {$inc: {score: 5}});
-    }
-  });
-
-  Template.player.events({
-    'click': function () {
-      Session.set("selected_player", this._id);
     }
   });
 }
