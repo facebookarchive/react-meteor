@@ -3,26 +3,5 @@
 </head>
 
 <body>
-  <div id="outer">
-    {{> leaderboard}}
-  </div>
+  <div id="outer"></div>
 </body>
-
-<template name="leaderboard">
-  <div class="leaderboard">
-    {{#each players}}
-      {{> player}}
-    {{/each}}
-  </div>
-
-  {{#if selected_name}}
-  <div class="details">
-    <div class="name">{{selected_name}}</div>
-    <input type="button" class="inc" value="Give 5 points" />
-  </div>
-  {{/if}}
-
-  {{#unless selected_name}}
-  <div class="none">Click a player to select</div>
-  {{/unless}}
-</template>

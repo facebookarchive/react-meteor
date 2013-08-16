@@ -10,6 +10,56 @@
 
 Players = new Meteor.Collection("players");
 
+var Leaderboard = React.createClass({
+  mixins: [MeteorMixin],
+
+  getMeteorState: function() {
+    var selectedPlayer = Players.findOne(Session.get("selected_player"));
+    return {
+      players: Players.find({}, {sort: {score: -1, name: 1}}).fetch(),
+      selectedPlayer: selectedPlayer,
+      selectedName: selectedPlayer && selectedPlayer.name
+    };
+  },
+
+  addFivePoints: function() {
+    Players.update(Session.get("selected_player"), {$inc: {score: 5}});
+  },
+
+  renderPlayer: function(model) {
+    return <Player id={model._id} name={model.name} score={model.score} />;
+  },
+
+  render: function() {
+    var children = [
+      <div class="leaderboard">
+        { this.state.players.map(this.renderPlayer) }
+      </div>
+    ];
+
+    if (this.state.selectedName) {
+      children.push(
+        <div className="details">
+          <div class="name">{this.state.selectedName}</div>
+          <input
+            type="button"
+            className="inc"
+            value="Give 5 points"
+            onClick={this.addFivePoints}
+          />
+        </div>
+      );
+
+    } else {
+      children.push(
+        <div className="none">Click a player to select</div>
+      );
+    }
+
+    return <div>{ children }</div>;
+  }
+});
+
 var Player = React.createClass({
   mixins: [MeteorMixin],
 
@@ -37,23 +87,6 @@ var Player = React.createClass({
     );
   }
 });
-
-if (Meteor.isClient) {
-  Template.leaderboard.players = function () {
-    return Players.find({}, {sort: {score: -1, name: 1}});
-  };
-
-  Template.leaderboard.selected_name = function () {
-    var player = Players.findOne(Session.get("selected_player"));
-    return player && player.name;
-  };
-
-  Template.leaderboard.events({
-    'click input.inc': function () {
-      Players.update(Session.get("selected_player"), {$inc: {score: 5}});
-    }
-  });
-}
 
 // On server startup, create some players if the database is empty.
 if (Meteor.isServer) {
