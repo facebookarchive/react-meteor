@@ -88,6 +88,15 @@ var Player = React.createClass({
   }
 });
 
+if (Meteor.isClient) {
+  Meteor.startup(function() {
+    React.renderComponent(
+      <Leaderboard />,
+      document.getElementById("outer")
+    );
+  });
+}
+
 // On server startup, create some players if the database is empty.
 if (Meteor.isServer) {
   Meteor.startup(function () {
