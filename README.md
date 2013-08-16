@@ -31,7 +31,7 @@ cd meteor-react/examples/leaderboard
 meteor
 ```
 
-Finally, visit http://localhost:3000 in your browser.
+Finally, visit [localhost:3000](http://localhost:3000) in your browser.
 
 Adding the package to your app
 ------------------------------
