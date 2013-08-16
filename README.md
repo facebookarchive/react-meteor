@@ -32,6 +32,7 @@ meteor
 ```
 
 Finally, visit [localhost:3000](http://localhost:3000) in your browser.
+For extra fun, try using the example in multiple browser windows!
 
 Adding the package to your app
 ------------------------------
