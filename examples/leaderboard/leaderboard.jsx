@@ -1,3 +1,10 @@
+/**
+ * Port of the leaderboard example to use React for rendering.
+ *
+ * This directive is necessary to enable preprocessing of JSX tags:
+ * @jsx React.DOM
+ */
+
 // Set up a collection to contain player information. On the server,
 // it is backed by a MongoDB collection named "players".
 
