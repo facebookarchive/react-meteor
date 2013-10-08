@@ -2,6 +2,12 @@ Package.describe({
   summary: "React rendering for Meteor apps"
 });
 
+var reactToolsVersion = "0.4.1";
+
+Npm.depends({
+  "react-tools": reactToolsVersion
+});
+
 Package._transitional_registerBuildPlugin({
   name: "compileJSX",
   use: [],
@@ -9,13 +15,13 @@ Package._transitional_registerBuildPlugin({
     'plugin/compile-jsx.js'
   ],
   npmDependencies: {
-    "react-tools": "0.4.1"
+    "react-tools": reactToolsVersion
   }
 });
 
 Package.on_use(function(api) {
   // Standard distribution of React, same version as react-tools.
-  api.add_files("vendor/react-0.4.1.js", "client");
+  api.add_files("vendor/react-" + reactToolsVersion + ".js", "client");
 
   // On the server, we use the modules that ship with react-tools.
   api.add_files("lib/require-react.js", "server");
