@@ -1,8 +1,8 @@
 {
   "name": "react-meteor",
   "version": "0.0.1",
-  "description": "Quick boilerplate for browserify and React modules.",
-  "main": "lib/index.js",
+  "description": "React Meteor bindings",
+  "main": "lib/ReactMeteor.js",
   "dependencies": {
     "react": "http://petehunt.net/react/react-0.5.1.tar.gz"
   },
