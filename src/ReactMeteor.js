@@ -21,6 +21,7 @@ var ReactMeteorMixin = {
     // for this state.
     if (this.state.meteor === prevState.meteor) {
       this._cancelComputation();
+      // TODO: what if this runs in the same tick?
       this._meteorComputation = Deps.autorun(this._handleMeteorChange);
     }
   },
