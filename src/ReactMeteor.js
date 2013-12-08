@@ -1,3 +1,5 @@
+var React = require('react');
+
 var ReactMeteorMixin = {
   _handleMeteorChange: function() {
     this.setState({meteor: this.getMeteorState()});
@@ -30,7 +32,7 @@ var ReactMeteorMixin = {
 
 function createMeteorClass(spec) {
   spec.mixins = spec.mixins || [];
-  spec.mixins.push(MeteorMixin);
+  spec.mixins.push(ReactMeteorMixin);
 
   var originalGetInitialState = spec.getInitialState || function() {
     return {};
