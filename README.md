@@ -1,4 +1,4 @@
-meteor-react
+react-meteor
 ============
 
 This repository defines a Meteor package that automatically integrates the

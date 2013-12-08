@@ -1,0 +1,19 @@
+{
+  "name": "react-boilerplate",
+  "version": "0.1.0",
+  "description": "Quick boilerplate for browserify and React modules.",
+  "main": "lib/index.js",
+  "dependencies": {
+    "react": "http://petehunt.net/react/react-0.5.1.tar.gz"
+  },
+  "devDependencies": {
+    "jsxc": "~0.1.2"
+  },
+  "scripts": {
+    "start": "jsxc --watch src/ lib/",
+    "build": "jsxc src/ lib/"
+  },
+  "files": ["lib/"],
+  "author": "Pete Hunt",
+  "license": "Apache 2"
+}
