@@ -4,7 +4,8 @@
   "description": "React Meteor bindings",
   "main": "lib/ReactMeteor.js",
   "dependencies": {
-    "react": "http://petehunt.net/react/react-0.5.1.tar.gz"
+    "react": "http://petehunt.net/react/react-0.5.1.tar.gz",
+    "react-raf-batching": "~0.0.0"
   },
   "devDependencies": {
     "jsxc": "~0.1.3"

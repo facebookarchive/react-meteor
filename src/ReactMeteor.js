@@ -1,5 +1,10 @@
 var React = require('react');
 
+// We use RAF batching since meteor may trigger callbacks all over the place.
+// This isn't strictly required but is more performant. Perhaps we don't
+// want to take this dependency.
+require('react-raf-batching').inject();
+
 var ReactMeteorMixin = {
   _handleMeteorChange: function() {
     this.setState({meteor: this.getMeteorState()});
