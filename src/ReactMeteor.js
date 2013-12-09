@@ -6,8 +6,8 @@ var React = require('react');
 require('react-raf-batching').inject();
 
 var ReactMeteorMixin = {
-  _handleMeteorChange: function() {
-    this.setState({meteor: this.getMeteorState()});
+  _handleMeteorChange: function(cb) {
+    this.setState({meteor: this.getMeteorState()}, cb);
   },
 
   _cancelComputation: function() {
@@ -16,19 +16,26 @@ var ReactMeteorMixin = {
   },
 
   componentWillMount: function() {
-    this._meteorComputation = Deps.autorun(this._handleMeteorChange);
+    this._meteorComputation = Deps.autorun(this._handleMeteorChange.bind(this, null));
+    this._realReplaceState = this.replaceState;
+    this.replaceState = this._replaceState;
   },
 
-  componentDidUpdate: function(prevProps, prevState) {
-    // When a component updates we should re-run all of our subscriptions if
-    // they have changed. However, data coming back from Meteor will also trigger
-    // this, so make sure that we don't get into an infinite loop by checking
-    // for this state.
-    if (this.state.meteor === prevState.meteor) {
+  _replaceState: function(newState, cb) {
+    if (this.state.meteor === newState.meteor) {
+      this.state = newState;
       this._cancelComputation();
-      // TODO: what if this runs in the same tick?
-      this._meteorComputation = Deps.autorun(this._handleMeteorChange);
+      this._meteorComputation = Deps.autorun(this._handleMeteorChange.bind(this, cb));
+    } else {
+      this._realReplaceState(newState, cb);
     }
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    var oldProps = this.props;
+    this.props = nextProps;
+    this._handleMeteorChange(null);
+    this.props = oldProps;
   },
 
   componentWillUnmount: function() {
