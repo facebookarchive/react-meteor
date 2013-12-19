@@ -1,14 +1,18 @@
 {
   "name": "react-meteor",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React Meteor bindings",
   "main": "lib/ReactMeteor.js",
   "dependencies": {
-    "react": "http://petehunt.net/react/react-0.5.1.tar.gz",
+    "react": "~0.8",
     "react-raf-batching": "~0.0.0"
   },
   "devDependencies": {
     "jsxc": "~0.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/petehunt/react-meteor"
   },
   "scripts": {
     "start": "jsxc --watch src/ lib/",
