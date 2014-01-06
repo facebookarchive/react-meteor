@@ -11,7 +11,7 @@
 Players = new Meteor.Collection("players");
 
 var Leaderboard = React.createClass({
-  mixins: [MeteorMixin],
+  mixins: [ReactMeteor.Mixin],
 
   getMeteorState: function() {
     var selectedPlayer = Players.findOne(Session.get("selected_player"));
@@ -61,7 +61,7 @@ var Leaderboard = React.createClass({
 });
 
 var Player = React.createClass({
-  mixins: [MeteorMixin],
+  mixins: [ReactMeteor.Mixin],
 
   getMeteorState: function() {
     return {

@@ -5,7 +5,8 @@ Package.describe({
 var reactToolsVersion = "0.8.0";
 
 Npm.depends({
-  "react-tools": reactToolsVersion
+  "react-tools": reactToolsVersion,
+  "react-raf-batching": "0.0.1"
 });
 
 Package._transitional_registerBuildPlugin({
@@ -24,11 +25,11 @@ Package.on_use(function(api) {
   api.add_files("vendor/react-" + reactToolsVersion + ".js", "client");
 
   // On the server, we use the modules that ship with react-tools.
-  api.add_files("lib/require-react.js", "server");
+  api.add_files("src/require-react.js", "server");
   api.export("React", "server");
 
   // Meteor-enabled components should include this mixin via
-  // React.createClass({ mixins: [MeteorMixin], ... }).
-  api.add_files("lib/mixin.js", ["server", "client"]);
-  api.export("MeteorMixin", ["server", "client"]);
+  // React.createClass({ mixins: [ReactMeteor.Mixin], ... }).
+  api.add_files("src/ReactMeteor.js", ["server", "client"]);
+  api.export("ReactMeteor", ["server", "client"]);
 });

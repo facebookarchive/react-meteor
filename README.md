@@ -51,31 +51,14 @@ to a common location and make `packages/react` a symbolic link.
 How it works
 ------------
 
-The package exposes a special `MeteorMixin` object that can be used to
-enable reactive data fetching for your React components. There's no magic
-involved; in fact, anyone who knows the basics of the component lifecycle
-could have written this mixin:
-```js
-MeteorMixin = {
-  componentWillMount: function() {
-    var component = this;
-    component._meteorComputation = Deps.autorun(function() {
-      component.setState(component.getMeteorState());
-    });
-  },
+The package exposes a special `ReactMeteor.Mixin` object that can be used
+to enable reactive data fetching for your React components.
 
-  componentWillUnmount: function() {
-    this._meteorComputation.stop();
-    delete this._meteorComputation;
-  }
-};
-```
-
-To add the `MeteorMixin` to a React component, simply include it in the
-`mixins` class property:
+To add the `ReactMeteor.Mixin` to a React component, simply include it in
+the `mixins` class property:
 ```js
 var MyComponent = React.createClass({
-  mixins: [MeteorMixin],
+  mixins: [ReactMeteor.Mixin],
 
   // Make sure your component implements this method.
   getMeteorState: function() {
@@ -86,7 +69,6 @@ var MyComponent = React.createClass({
   }
 });
 ```
-
 The `getMeteorState` method should return an object of properties that
 will be accessed via `this.state` in the component's `render` method or
 elsewhere.  Dependencies will be registered for any data accesses
