@@ -27,21 +27,10 @@ var ReactMeteorMixin = {
   }
 };
 
-// TODO Remove this.
-function createMeteorClass(spec) {
+// So you don't have to mix in ReactMeteor.Mixin explicitly.
+function createClass(spec) {
   spec.mixins = spec.mixins || [];
   spec.mixins.push(ReactMeteorMixin);
-
-  var originalGetInitialState = spec.getInitialState || function() {
-    return {};
-  };
-
-  spec.getInitialState = function() {
-    var state = originalGetInitialState();
-    state.meteor = {};
-    return state;
-  };
-
   return React.createClass(spec);
 }
 
@@ -52,4 +41,4 @@ if (typeof exports === "object") {
 }
 
 ReactMeteor.Mixin = ReactMeteorMixin;
-ReactMeteor.createMeteorClass = createMeteorClass;
+ReactMeteor.createClass = createClass;

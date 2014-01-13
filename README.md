@@ -74,3 +74,17 @@ will be accessed via `this.state` in the component's `render` method or
 elsewhere.  Dependencies will be registered for any data accesses
 performed by `getMeteorState` so that the component can be automatically
 re-rendered whenever the data changes.
+
+Alternatively, if you prefer not to declare `mixins` explicitly, you can
+create the class with `ReactMeteor.createClass`:
+```js
+var MyComponent = ReactMeteor.createClass({
+  // Make sure your component implements this method.
+  getMeteorState: function() {
+    return {
+      foo: Session.get("foo"),
+      ...
+    };
+  }
+});
+```
