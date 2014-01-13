@@ -32,7 +32,7 @@ var Leaderboard = React.createClass({
 
   render: function() {
     var children = [
-      <div class="leaderboard">
+      <div className="leaderboard">
         { this.state.players.map(this.renderPlayer) }
       </div>
     ];
@@ -40,7 +40,7 @@ var Leaderboard = React.createClass({
     if (this.state.selectedName) {
       children.push(
         <div className="details">
-          <div class="name">{this.state.selectedName}</div>
+          <div className="name">{this.state.selectedName}</div>
           <input
             type="button"
             className="inc"
@@ -81,8 +81,8 @@ var Player = React.createClass({
 
     return (
       <div className={className} onClick={this.select}>
-        <span class="name">{this.props.name}</span>
-        <span class="score">{this.props.score}</span>
+        <span className="name">{this.props.name}</span>
+        <span className="score">{this.props.score}</span>
       </div>
     );
   }
