@@ -11,8 +11,7 @@ var ReactMeteorMixin = {
   },
 
   componentWillMount: function() {
-    var handler = this._handleMeteorChange.bind(this);
-    this._meteorComputation = Deps.autorun(handler);
+    this._meteorComputation = Deps.autorun(this._handleMeteorChange);
   },
 
   componentWillReceiveProps: function(nextProps) {
