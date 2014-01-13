@@ -5,8 +5,7 @@ Package.describe({
 var reactToolsVersion = "0.8.0";
 
 Npm.depends({
-  "react-tools": reactToolsVersion,
-  "react-raf-batching": "0.0.1"
+  "react-tools": reactToolsVersion
 });
 
 Package._transitional_registerBuildPlugin({
