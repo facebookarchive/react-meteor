@@ -35,7 +35,7 @@ var Leaderboard = React.createClass({
 
     return (
       <Player
-        id={model._id}
+        key={model._id}
         name={model.name}
         score={model.score}
         className={model._id === _id ? "selected" : ""}
