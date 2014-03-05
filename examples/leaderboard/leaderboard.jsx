@@ -26,8 +26,22 @@ var Leaderboard = React.createClass({
     Players.update(Session.get("selected_player"), {$inc: {score: 5}});
   },
 
+  selectPlayer: function(id) {
+    Session.set("selected_player", id);
+  },
+
   renderPlayer: function(model) {
-    return <Player id={model._id} name={model.name} score={model.score} />;
+    var _id = this.state.selectedPlayer && this.state.selectedPlayer._id;
+
+    return (
+      <Player
+        key={model._id}
+        name={model.name}
+        score={model.score}
+        className={model._id === _id ? "selected" : ""}
+        onClick={this.selectPlayer.bind(this, model._id)}
+      />
+    )
   },
 
   render: function() {
@@ -61,26 +75,9 @@ var Leaderboard = React.createClass({
 });
 
 var Player = React.createClass({
-  mixins: [ReactMeteor.Mixin],
-
-  getMeteorState: function() {
-    return {
-      isSelected: Session.equals("selected_player", this.props.id)
-    };
-  },
-
-  select: function() {
-    Session.set("selected_player", this.props.id);
-  },
-
   render: function() {
-    var className = "player";
-    if (this.state.isSelected) {
-      className += " selected";
-    }
-
-    return (
-      <div className={className} onClick={this.select}>
+    return this.transferPropsTo(
+      <div className="player">
         <span className="name">{this.props.name}</span>
         <span className="score">{this.props.score}</span>
       </div>
