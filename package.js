@@ -2,7 +2,7 @@ Package.describe({
   summary: "React rendering for Meteor apps"
 });
 
-var reactToolsVersion = "0.8.0";
+var reactToolsVersion = "0.10.0";
 
 Npm.depends({
   "react-tools": reactToolsVersion
