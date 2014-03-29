@@ -1,10 +1,10 @@
 {
   "name": "react-meteor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "React Meteor bindings",
   "main": "lib/ReactMeteor.js",
   "dependencies": {
-    "react": "~0.8",
+    "react": "~0.10",
     "react-raf-batching": "~0.0.0"
   },
   "devDependencies": {
