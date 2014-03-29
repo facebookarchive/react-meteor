@@ -1,1 +1,1 @@
-React = Npm.require("react-tools").React;
+React = Npm.require("react");
