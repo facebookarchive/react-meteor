@@ -2,7 +2,7 @@ Package.describe({
   summary: "React rendering for Meteor apps"
 });
 
-var reactVersion = "0.10.0";
+var reactVersion = "0.11.1";
 
 Npm.depends({
   "react": reactVersion,
