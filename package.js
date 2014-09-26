@@ -9,6 +9,7 @@ var reactVersion = "0.11.2";
 
 Npm.depends({
   "react": reactVersion,
+  "react-addons": "0.9.0"
 });
 
 Package._transitional_registerBuildPlugin({
