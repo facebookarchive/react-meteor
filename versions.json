@@ -1,0 +1,20 @@
+{
+  "dependencies": [
+    [
+      "meteor",
+      "1.1.0"
+    ],
+    [
+      "underscore",
+      "1.0.0"
+    ]
+  ],
+  "pluginDependencies": [
+    [
+      "compileJSX",
+      {}
+    ]
+  ],
+  "toolVersion": "meteor-tool@1.0.31",
+  "format": "1.0"
+}
