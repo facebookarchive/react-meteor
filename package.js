@@ -1,11 +1,15 @@
 Package.describe({
-  summary: "React rendering for Meteor apps"
+  name: "luma:react",
+  summary: "React rendering for Meteor apps",
+  version: "1.0.1",
+  git: "https://github.com/LumaPictures/react-meteor"
 });
 
-var reactVersion = "0.10.0";
+var reactVersion = "0.11.2";
 
 Npm.depends({
   "react": reactVersion,
+  "react-addons": "0.9.0"
 });
 
 Package._transitional_registerBuildPlugin({
@@ -20,7 +24,10 @@ Package._transitional_registerBuildPlugin({
   }
 });
 
-Package.on_use(function(api) {
+Package.onUse(function(api) {
+  if (api.versionsFrom)
+    api.versionsFrom('METEOR@0.9.0');
+
   // Standard distribution of React, same version as react-tools.
   api.add_files("vendor/react-" + reactVersion + ".js", "client");
 
