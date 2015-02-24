@@ -12,6 +12,10 @@ var cx = React.addons.classSet;
 Players = new Meteor.Collection("players");
 
 var Leaderboard = ReactMeteor.createClass({
+  startMeteorSubscriptions: function() {
+    Meteor.subscribe("players");
+  },
+
   getMeteorState: function() {
     var selectedPlayer = Players.findOne(Session.get("selected_player"));
     return {
@@ -107,5 +111,9 @@ if (Meteor.isServer) {
         });
       }
     }
+  });
+
+  Meteor.publish("players", function() {
+    return Players.find();
   });
 }
