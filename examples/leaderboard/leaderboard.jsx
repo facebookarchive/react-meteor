@@ -5,14 +5,13 @@
  * @jsx React.DOM
  */
 
+var cx = React.addons.classSet;
+
 // Set up a collection to contain player information. On the server,
 // it is backed by a MongoDB collection named "players".
-
 Players = new Meteor.Collection("players");
 
-var Leaderboard = React.createClass({
-  mixins: [ReactMeteor.Mixin],
-
+var Leaderboard = ReactMeteor.createClass({
   getMeteorState: function() {
     var selectedPlayer = Players.findOne(Session.get("selected_player"));
     return {
@@ -33,15 +32,13 @@ var Leaderboard = React.createClass({
   renderPlayer: function(model) {
     var _id = this.state.selectedPlayer && this.state.selectedPlayer._id;
 
-    return (
-      <Player
-        key={model._id}
-        name={model.name}
-        score={model.score}
-        className={model._id === _id ? "selected" : ""}
-        onClick={this.selectPlayer.bind(this, model._id)}
-      />
-    )
+    return <Player
+      key={model._id}
+      name={model.name}
+      score={model.score}
+      className={model._id === _id ? "selected" : ""}
+      onClick={this.selectPlayer.bind(this, model._id)}
+    />;
   },
 
   render: function() {
@@ -76,18 +73,17 @@ var Leaderboard = React.createClass({
 
 var Player = React.createClass({
   render: function() {
-    return this.transferPropsTo(
-      <div className="player">
-        <span className="name">{this.props.name}</span>
-        <span className="score">{this.props.score}</span>
-      </div>
-    );
+    var { name, score, ...rest } = this.props;
+    return <div {...rest} className={cx("player", rest.className)}>
+      <span className="name">{name}</span>
+      <span className="score">{score}</span>
+    </div>;
   }
 });
 
 if (Meteor.isClient) {
   Meteor.startup(function() {
-    React.renderComponent(
+    React.render(
       <Leaderboard />,
       document.getElementById("outer")
     );
@@ -104,8 +100,12 @@ if (Meteor.isServer) {
                    "Carl Friedrich Gauss",
                    "Nikola Tesla",
                    "Claude Shannon"];
-      for (var i = 0; i < names.length; i++)
-        Players.insert({name: names[i], score: Math.floor(Random.fraction()*10)*5});
+      for (var i = 0; i < names.length; i++) {
+        Players.insert({
+          name: names[i],
+          score: Math.floor(Random.fraction()*10)*5
+        });
+      }
     }
   });
 }
