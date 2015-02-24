@@ -1,43 +1,46 @@
 var ReactMeteorMixin = {
-  _handleMeteorChange: function() {
-    this.setState(this.getMeteorState());
-  },
-
-  _cancelComputation: function() {
-    if (this._meteorComputation) {
-      this._meteorComputation.stop();
-      this._meteorComputation = null;
-    }
-  },
-
   componentWillMount: function() {
-    this._meteorComputation = Deps.autorun(this._handleMeteorChange);
+    var self = this;
+    self._meteorStateDep = new Tracker.Dependency();
+
+    Tracker.autorun(function(computation) {
+      self._meteorComputation = computation;
+      self._meteorStateDep.depend();
+
+      if (self.startMeteorSubscriptions) {
+        // Calling this method in a Tracker.autorun callback will ensure
+        // that the subscriptions are canceled when the computation stops.
+        self.startMeteorSubscriptions();
+      }
+
+      if (self.getMeteorState) {
+        self.setState(self.getMeteorState());
+      }
+    });
   },
 
   componentWillReceiveProps: function(nextProps) {
     var oldProps = this.props;
     this.props = nextProps;
-    this._handleMeteorChange();
+    this._meteorStateDep.changed();
     this.props = oldProps;
   },
 
   componentWillUnmount: function() {
-    this._cancelComputation();
+    if (this._meteorComputation) {
+      this._meteorComputation.stop();
+      this._meteorComputation = null;
+    }
   }
 };
 
-// So you don't have to mix in ReactMeteor.Mixin explicitly.
-function createClass(spec) {
-  spec.mixins = spec.mixins || [];
-  spec.mixins.push(ReactMeteorMixin);
-  return React.createClass(spec);
-}
+ReactMeteor = {
+  Mixin: ReactMeteorMixin,
 
-if (typeof exports === "object") {
-  ReactMeteor = exports;
-} else {
-  ReactMeteor = {};
-}
-
-ReactMeteor.Mixin = ReactMeteorMixin;
-ReactMeteor.createClass = createClass;
+  // So you don't have to mix in ReactMeteor.Mixin explicitly.
+  createClass: function createClass(spec) {
+    spec.mixins = spec.mixins || [];
+    spec.mixins.push(ReactMeteorMixin);
+    return React.createClass(spec);
+  }
+};
