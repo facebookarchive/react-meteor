@@ -1,1 +1,1 @@
-React = Npm.require("react");
+React = Npm.require("react/addons");
