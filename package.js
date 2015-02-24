@@ -1,5 +1,11 @@
 Package.describe({
-  summary: "React rendering for Meteor apps"
+  name: "react",
+  // TODO Consider using reactVersion here, since this version is a lot
+  // less meaningful?
+  version: "0.1.0",
+  summary: "React rendering for Meteor apps",
+  git: "https://github.com/reactjs/react-meteor/",
+  documentation: "README.md"
 });
 
 var reactVersion = "0.12.2";
@@ -8,28 +14,40 @@ Npm.depends({
   "react": reactVersion,
 });
 
-Package._transitional_registerBuildPlugin({
+Package.registerBuildPlugin({
   name: "compileJSX",
   use: [],
   sources: [
-    'plugin/compile-jsx.js'
+    "plugin/compile-jsx.js"
   ],
   npmDependencies: {
-    "react": reactVersion,
     "react-tools": reactVersion
   }
 });
 
-Package.on_use(function(api) {
-  // Standard distribution of React, same version as react-tools.
-  api.add_files("vendor/react-" + reactVersion + ".js", "client");
+Package.onUse(function(api) {
+  api.use("meteorhacks:inject-initial", "server");
 
-  // On the server, we use the modules that ship with react.
-  api.add_files("src/require-react.js", "server");
+  api.addFiles([
+    // On the client, we inject a <script> tag to load the appropriate
+    // version of React according to process.env.NODE_ENV.
+    "src/inject-react.js",
+    // On the server, we use the modules that ship with react.
+    "src/require-react.js"
+  ], "server");
+
+  // This React variable is defined in src/require-react.js.
   api.export("React", "server");
 
-  // Meteor-enabled components should include this mixin via
-  // React.createClass({ mixins: [ReactMeteor.Mixin], ... }).
-  api.add_files("src/ReactMeteor.js", ["server", "client"]);
+  // Meteor-enabled components should include the ReactMeteor mixin via
+  // React.createClass({ mixins: [ReactMeteor.Mixin], ... }) or just
+  // ReactMeteor.createClass({ ... }).
+  api.addFiles("src/ReactMeteor.js", ["server", "client"]);
   api.export("ReactMeteor", ["server", "client"]);
+});
+
+Package.onTest(function(api) {
+  api.use("tinytest");
+  api.use("react");
+  api.addFiles("react-tests.js");
 });
