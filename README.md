@@ -60,29 +60,44 @@ the `mixins` class property:
 var MyComponent = React.createClass({
   mixins: [ReactMeteor.Mixin],
 
+  startMeteorSubscriptions: function() {
+    Meteor.subscribe("players");
+  },
+
   // Make sure your component implements this method.
   getMeteorState: function() {
     return {
-      foo: Session.get("foo"),
+      playerCount: Players.find().count(),
       ...
     };
   }
 });
 ```
+
+The `startMeteorSubscriptions` method is optional, and should be
+implemented when the component needs to subscribe to specific query sets
+using [`Meteor.subscribe`](http://docs.meteor.com/#/full/meteor_subscribe)
+It will be called in a `Tracker.autorun` callback, so the subscriptions
+will be canceled automatically when the component is unmounted.
+
 The `getMeteorState` method should return an object of properties that
-will be accessed via `this.state` in the component's `render` method or
-elsewhere.  Dependencies will be registered for any data accesses
-performed by `getMeteorState` so that the component can be automatically
+will be merged into `this.state`, for easy access in the component's
+`render` method or elsewhere.  Dependencies will be tracked for any data
+accessed by `getMeteorState` so that the component can be automatically
 re-rendered whenever the data changes.
 
 Alternatively, if you prefer not to declare `mixins` explicitly, you can
 create the class with `ReactMeteor.createClass`:
 ```js
 var MyComponent = ReactMeteor.createClass({
+  startMeteorSubscriptions: function() {
+    Meteor.subscribe("players");
+  },
+
   // Make sure your component implements this method.
   getMeteorState: function() {
     return {
-      foo: Session.get("foo"),
+      playerCount: Players.find().count(),
       ...
     };
   }
