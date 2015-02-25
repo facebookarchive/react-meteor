@@ -89,8 +89,12 @@ if (Meteor.isClient) {
   Meteor.startup(function() {
     React.render(
       <Leaderboard />,
-      document.getElementById("outer")
+      document.getElementById("inner")
     );
+  });
+
+  Accounts.ui.config({
+    passwordSignupFields: "USERNAME_ONLY"
   });
 }
 

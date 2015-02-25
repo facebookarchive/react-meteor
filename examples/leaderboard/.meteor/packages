@@ -5,3 +5,5 @@
 
 meteor-platform
 react
+accounts-password
+accounts-ui
