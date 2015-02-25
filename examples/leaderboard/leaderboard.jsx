@@ -11,6 +11,12 @@ var cx = React.addons.classSet;
 // it is backed by a MongoDB collection named "players".
 Players = new Meteor.Collection("players");
 
+Meteor.methods({
+  addPoints: function(userId, points) {
+    Players.update(userId, { $inc: { score: +points } });
+  }
+});
+
 var Leaderboard = ReactMeteor.createClass({
   startMeteorSubscriptions: function() {
     Meteor.subscribe("players");
@@ -26,7 +32,7 @@ var Leaderboard = ReactMeteor.createClass({
   },
 
   addFivePoints: function() {
-    Players.update(Session.get("selected_player"), {$inc: {score: 5}});
+    Meteor.call("addPoints", Session.get("selected_player"), 5);
   },
 
   selectPlayer: function(id) {
