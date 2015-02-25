@@ -23,6 +23,7 @@ var ReactMeteorMixin = {
     var oldProps = this.props;
     this.props = nextProps;
     this._meteorStateDep.changed();
+    Tracker.flush();
     this.props = oldProps;
   },
 
