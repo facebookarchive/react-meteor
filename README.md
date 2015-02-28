@@ -21,7 +21,7 @@ curl https://install.meteor.com | /bin/sh
 
 Clone this repository:
 ```
-git clone https://github.com/benjamn/react-meteor.git
+git clone https://github.com/reactjs/react-meteor.git
 ```
 
 Fire up one of the examples:
@@ -42,7 +42,7 @@ to your Meteor app:
 ```
 cd path/to/my-app/
 echo react >> .meteor/packages
-git clone https://github.com/benjamn/react-meteor.git packages/react
+git clone https://github.com/reactjs/react-meteor.git packages/react
 ```
 
 If you want to share the package between multiple apps, you can clone it
