@@ -12,6 +12,7 @@ var reactVersion = "0.12.2";
 
 Npm.depends({
   "react": reactVersion,
+  "react-tools": reactVersion,
 });
 
 Package.registerBuildPlugin({
