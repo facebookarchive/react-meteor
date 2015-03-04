@@ -1,5 +1,5 @@
 Package.describe({
-  name: "react",
+  name: "benjamn:react",
   // TODO Consider using reactVersion here, since this version is a lot
   // less meaningful?
   version: "0.1.0",
