@@ -26,7 +26,7 @@ Package.registerBuildPlugin({
 });
 
 Package.onUse(function(api) {
-  api.use("meteorhacks:inject-initial", "server");
+  api.use("meteorhacks:inject-initial@1.0.2", "server");
 
   api.addFiles([
     // On the client, we inject a <script> tag to load the appropriate
