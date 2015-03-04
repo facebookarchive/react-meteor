@@ -36,17 +36,12 @@ For extra fun, try using the example in multiple browser windows!
 Adding the package to your app
 ------------------------------
 
-Although the Meteor package API is deliberately undocumented and remains
-in flux before v1.0, here is how I currently recommend adding this package
-to your Meteor app:
+The officially recommended way to add this package to your app is simply
+to execute the following commands:
 ```
 cd path/to/my-app/
-echo react >> .meteor/packages
-git clone https://github.com/reactjs/react-meteor.git packages/react
+meteor add reactjs:react
 ```
-
-If you want to share the package between multiple apps, you can clone it
-to a common location and make `packages/react` a symbolic link.
 
 How it works
 ------------
