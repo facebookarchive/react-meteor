@@ -1,5 +1,5 @@
 Package.describe({
-  name: "benjamn:react",
+  name: "reactjs:react",
   // TODO Consider using reactVersion here, since this version is a lot
   // less meaningful?
   version: "0.1.0",
@@ -48,6 +48,6 @@ Package.onUse(function(api) {
 
 Package.onTest(function(api) {
   api.use("tinytest");
-  api.use("react");
+  api.use("reactjs:react");
   api.addFiles("react-tests.js");
 });
