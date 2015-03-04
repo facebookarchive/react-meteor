@@ -4,6 +4,5 @@
 # but you can also edit it by hand.
 
 meteor-platform
-react
 accounts-password
 accounts-ui
