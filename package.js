@@ -29,6 +29,13 @@ Package.onUse(function(api) {
   api.use("meteorhacks:inject-initial@1.0.2", "server");
 
   api.addFiles([
+    "vendor/react-with-addons-" + reactVersion + ".js",
+    "vendor/react-with-addons-" + reactVersion + ".min.js"
+  ], "client", {
+    isAsset: true
+  });
+
+  api.addFiles([
     // On the client, we inject a <script> tag to load the appropriate
     // version of React according to process.env.NODE_ENV.
     "src/inject-react.js",

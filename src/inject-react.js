@@ -4,5 +4,5 @@ var file = process.env.NODE_ENV === "production"
 
 Inject.rawHead(
   'react',
-  '<script src="//fb.me/' + file + '"></script>'
+  '<script src="/packages/reactjs_react/vendor/' + file + '"></script>'
 );
