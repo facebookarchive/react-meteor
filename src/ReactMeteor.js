@@ -3,7 +3,6 @@ var ReactMeteorMixin = {
     var self = this;
 
     self._meteorStateDep = new Tracker.Dependency();
-    self._meteorStateQueue = [];
     self._meteorFirstRun = true;
 
     if (Meteor.isClient) {
@@ -67,30 +66,14 @@ function enqueueMeteorStateUpdate(component) {
     return;
   }
 
-  component._meteorStateQueue.push(partialState);
-
-  if (component._meteorStateTimer) {
-    // We already have a timer pending.
-    return;
-  }
-
-  component._meteorStateTimer = Meteor.setTimeout(function() {
-    component._meteorStateTimer = null;
-    var combinedState = {};
-    var partialStates = component._meteorStateQueue.splice(0);
-    partialStates.unshift(combinedState);
-    _.extend.apply(_, partialStates);
+  Tracker.afterFlush(function() {
     component._meteorCalledSetState = true;
-    component.setState(combinedState);
-  }, ReactMeteor.BATCH_DELAY);
+    component.setState(partialState);
+  });
 }
 
 ReactMeteor = {
   Mixin: ReactMeteorMixin,
-
-  // Delay (in milliseconds) before pending state changes are combined and
-  // applied to the component.
-  BATCH_DELAY: 16,
 
   // So you don't have to mix in ReactMeteor.Mixin explicitly.
   createClass: function createClass(spec) {
