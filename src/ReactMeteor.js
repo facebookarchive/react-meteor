@@ -79,6 +79,31 @@ ReactMeteor = {
   createClass: function createClass(spec) {
     spec.mixins = spec.mixins || [];
     spec.mixins.push(ReactMeteorMixin);
-    return React.createClass(spec);
+    var Cls = React.createClass(spec);
+
+    if (Meteor.isClient &&
+        typeof Template === "function" &&
+        typeof spec.templateName === "string") {
+      var template = new Template(
+        spec.templateName,
+        function() {
+          // A placeholder HTML element whose parentNode will serve as the
+          // container into which React.render renders the component.
+          return new HTML.SPAN;
+        }
+      );
+
+      template.onRendered(function() {
+        React.render(
+          // Equivalent to <Cls {...this.data} />:
+          React.createElement(Cls, this.data || {}),
+          this.find("span").parentNode
+        );
+      });
+
+      Template[spec.templateName] = template;
+    }
+
+    return Cls;
   }
 };

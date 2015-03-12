@@ -18,6 +18,12 @@ Meteor.methods({
 });
 
 var Leaderboard = ReactMeteor.createClass({
+  // Specifying a templateName property allows the component to be
+  // interpolated into a Blaze template just like any other template:
+  // {{> Leaderboard x=1 y=2}}. This corresponds to the JSX expression
+  // <Leaderboard x={1} y={2} />.
+  templateName: "Leaderboard",
+
   startMeteorSubscriptions: function() {
     Meteor.subscribe("players");
   },
@@ -92,13 +98,6 @@ var Player = React.createClass({
 });
 
 if (Meteor.isClient) {
-  Meteor.startup(function() {
-    React.render(
-      <Leaderboard />,
-      document.getElementById("inner")
-    );
-  });
-
   Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"
   });

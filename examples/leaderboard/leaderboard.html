@@ -6,6 +6,8 @@
   <div id="outer">
     {{> loginButtons}}
     <br><br><br>
-    <div id="inner"></div>
+    <!-- It's regrettable that this wrapper <div> is still necessary for
+         React.render to have an empty container to render into. -->
+    <div id="inner">{{> Leaderboard}}</div>
   </div>
 </body>
