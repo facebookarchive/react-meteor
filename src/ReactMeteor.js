@@ -72,6 +72,44 @@ function enqueueMeteorStateUpdate(component) {
   });
 }
 
+// Like React.render, but it replaces targetNode, and works even if
+// targetNode.parentNode has children other than targetNode.
+function renderInPlaceOfNode(reactElement, targetNode) {
+  var container = targetNode.parentNode;
+  var prevSibs = [];
+  var nextSibs = [];
+  var sibs = prevSibs;
+  var child = container.firstChild;
+
+  while (child) {
+    if (child === targetNode) {
+      sibs = nextSibs;
+    } else {
+      sibs.push(child);
+    }
+    var next = child.nextSibling;
+    container.removeChild(child);
+    child = next;
+  }
+
+  var result = React.render(reactElement, container);
+  var rendered = container.firstChild;
+
+  if (prevSibs.length > 0) {
+    prevSibs.forEach(function(sib) {
+      container.insertBefore(sib, rendered);
+    });
+  }
+
+  if (nextSibs.length > 0) {
+    nextSibs.forEach(function(sib) {
+      container.appendChild(sib);
+    });
+  }
+
+  return result;
+}
+
 ReactMeteor = {
   Mixin: ReactMeteorMixin,
 
@@ -87,17 +125,17 @@ ReactMeteor = {
       var template = new Template(
         spec.templateName,
         function() {
-          // A placeholder HTML element whose parentNode will serve as the
-          // container into which React.render renders the component.
+          // A placeholder HTML element that will serve as the mounting
+          // point for the React component. May have siblings!
           return new HTML.SPAN;
         }
       );
 
       template.onRendered(function() {
-        React.render(
+        renderInPlaceOfNode(
           // Equivalent to <Cls {...this.data} />:
           React.createElement(Cls, this.data || {}),
-          this.find("span").parentNode
+          this.find("span")
         );
       });
 

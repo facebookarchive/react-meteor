@@ -83,7 +83,7 @@ var Leaderboard = ReactMeteor.createClass({
       );
     }
 
-    return <div>{ children }</div>;
+    return <div className="inner">{ children }</div>;
   }
 });
 
