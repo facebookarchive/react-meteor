@@ -2,7 +2,7 @@ Package.describe({
   name: "reactjs:react",
   // TODO Consider using reactVersion here, since this version is a lot
   // less meaningful?
-  version: "0.2.1",
+  version: "0.2.2",
   summary: "React rendering for Meteor apps",
   git: "https://github.com/reactjs/react-meteor/",
   documentation: "README.md"
