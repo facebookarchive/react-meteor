@@ -132,12 +132,15 @@ ReactMeteor = {
       );
 
       template.onRendered(function() {
-        renderInPlaceOfNode(
+        this._reactComponent = renderInPlaceOfNode(
           // Equivalent to <Cls {...this.data} />:
           React.createElement(Cls, this.data || {}),
-          this.find("span")
+          this.firstNode
         );
       });
+      template.onDestroyed(function() {
+        React.unmountComponentAtNode(this._reactComponent.getDOMNode().parentNode)
+      })
 
       Template[spec.templateName] = template;
     }
