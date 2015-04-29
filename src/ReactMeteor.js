@@ -132,7 +132,7 @@ ReactMeteor = {
       );
 
       template.onRendered(function() {
-        this._reactComponent = renderInPlaceOfNode(
+        this._reactComponent = React.render(
           // Equivalent to <Cls {...this.data} />:
           React.createElement(Cls, this.data || {}),
           this.firstNode
