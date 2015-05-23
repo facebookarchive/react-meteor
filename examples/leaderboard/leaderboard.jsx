@@ -88,7 +88,12 @@ var Leaderboard = ReactMeteor.createClass({
 });
 
 var Player = React.createClass({
+  shouldComponentUpdate: function(nextProps, nextState){
+    var { name, score, ...rest } = this.props;
+    return name !== nextProps.name || score !== nextProps.score || rest.className !== nextProps.className;
+  },
   render: function() {
+    console.log('rendering: ', this.props.name);
     var { name, score, ...rest } = this.props;
     return <div {...rest} className={cx("player", rest.className)}>
       <span className="name">{name}</span>
