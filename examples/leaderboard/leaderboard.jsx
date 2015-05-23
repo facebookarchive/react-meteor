@@ -93,7 +93,6 @@ var Player = React.createClass({
     return name !== nextProps.name || score !== nextProps.score || rest.className !== nextProps.className;
   },
   render: function() {
-    console.log('rendering: ', this.props.name);
     var { name, score, ...rest } = this.props;
     return <div {...rest} className={cx("player", rest.className)}>
       <span className="name">{name}</span>
