@@ -16,4 +16,4 @@ if (path.sep !== "/") {
   src = src.split(path.sep).join("/");
 }
 
-Inject.rawHead('react', '<script src="' + src + '"></script>');
+Inject.rawHead('react', '<script src="' + src + '" type="text/javascript"></script>');
