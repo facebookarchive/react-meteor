@@ -29,7 +29,11 @@ Package.onUse(function(api) {
   api.use("templating");
 
   api.addFiles([
-    // On the client, we use un-minified React, Meteor will minimize when building for prod.
+    // On the client, we use un-minified React, and let Meteor minify it
+    // when building for production. Note that the resulting file will not
+    // be quite as small as the more aggressively minified version shipped
+    // by Facebook, but we currently have no good way of including
+    // different versions of files in development and production.
     "vendor/react-with-addons-" + reactVersion + ".js",
     "src/client-react.js"
   ], "client");
@@ -39,7 +43,6 @@ Package.onUse(function(api) {
     "src/require-react.js"
   ], "server");
 
-  // This React variable is defined in src/require-react.js.
   api.export("React");
 
   // Meteor-enabled components should include the ReactMeteor mixin via
