@@ -110,6 +110,31 @@ function renderInPlaceOfNode(reactElement, targetNode) {
   return result;
 }
 
+function unmountComponent(reactComponent) {
+  var rootNode = React.findDOMNode(reactComponent);
+  var container = rootNode && rootNode.parentNode;
+
+  if (container) {
+    var siblings = [];
+    var sibling = container.firstChild;
+
+    while (sibling) {
+      var next = sibling.nextSibling;
+      if (sibling !== rootNode) {
+        siblings.push(sibling);
+        container.removeChild(sibling);
+      }
+      sibling = next;
+    }
+
+    React.unmountComponentAtNode(container);
+
+    siblings.forEach(function (sib) {
+      container.appendChild(sib);
+    });
+  }
+}
+
 ReactMeteor = {
   Mixin: ReactMeteorMixin,
 
@@ -132,11 +157,15 @@ ReactMeteor = {
       );
 
       template.onRendered(function() {
-        renderInPlaceOfNode(
+        this._reactComponent = renderInPlaceOfNode(
           // Equivalent to <Cls {...this.data} />:
           React.createElement(Cls, this.data || {}),
           this.find("span")
         );
+      });
+
+      template.onDestroyed(function() {
+        unmountComponent(this._reactComponent);
       });
 
       Template[spec.templateName] = template;
