@@ -86,9 +86,9 @@ function renderInPlaceOfNode(reactElement, targetNode) {
       sibs = nextSibs;
     } else {
       sibs.push(child);
+      container.removeChild(child);
     }
     var next = child.nextSibling;
-    container.removeChild(child);
     child = next;
   }
 
@@ -132,12 +132,17 @@ ReactMeteor = {
       );
 
       template.onRendered(function() {
-        renderInPlaceOfNode(
+        //debugger
+        this._reactComponent = React.render(
           // Equivalent to <Cls {...this.data} />:
           React.createElement(Cls, this.data || {}),
-          this.find("span")
+          this.firstNode.parentNode
         );
       });
+
+      template.onDestroyed(function() {
+        React.unmountComponentAtNode(this._reactComponent.getDOMNode().parentNode)
+      })
 
       Template[spec.templateName] = template;
     }
