@@ -21,7 +21,7 @@ curl https://install.meteor.com | /bin/sh
 
 Clone this repository:
 ```
-git clone https://github.com/reactjs/react-meteor.git
+git clone git@github.com:reactjs/react-meteor.git
 ```
 
 Fire up one of the examples:
