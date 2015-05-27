@@ -26,7 +26,7 @@ Package.registerBuildPlugin({
 });
 
 Package.onUse(function(api) {
-  api.use("templating");
+  api.use("templating@1.1.1");
 
   api.addFiles([
     // On the client, we use un-minified React, and let Meteor minify it
