@@ -30,22 +30,18 @@ Package.onUse(function(api) {
   api.use("templating");
 
   api.addFiles([
+    // On the client, we use un-minified React, Meteor will minimize when building for prod.
     "vendor/react-with-addons-" + reactVersion + ".js",
-    "vendor/react-with-addons-" + reactVersion + ".min.js"
-  ], "client", {
-    isAsset: true
-  });
+    "src/client-react.js"
+  ], "client");
 
   api.addFiles([
-    // On the client, we inject a <script> tag to load the appropriate
-    // version of React according to process.env.NODE_ENV.
-    "src/inject-react.js",
     // On the server, we use the modules that ship with react.
     "src/require-react.js"
   ], "server");
 
   // This React variable is defined in src/require-react.js.
-  api.export("React", "server");
+  api.export("React");
 
   // Meteor-enabled components should include the ReactMeteor mixin via
   // React.createClass({ mixins: [ReactMeteor.Mixin], ... }) or just
