@@ -27,6 +27,7 @@ Package.registerBuildPlugin({
 
 Package.onUse(function(api) {
   api.use("meteorhacks:inject-initial@1.0.2", "server");
+  api.use("templating");
 
   api.addFiles([
     "vendor/react-with-addons-" + reactVersion + ".js",
