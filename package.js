@@ -8,7 +8,7 @@ Package.describe({
   documentation: "README.md"
 });
 
-var reactVersion = "0.13.0";
+var reactVersion = "0.13.3";
 
 Npm.depends({
   "react": reactVersion,
