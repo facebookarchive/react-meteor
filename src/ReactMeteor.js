@@ -157,11 +157,16 @@ ReactMeteor = {
       );
 
       template.onRendered(function() {
-        this._reactComponent = renderInPlaceOfNode(
+        var self = this;
+        self._reactComponent = renderInPlaceOfNode(
           // Equivalent to <Cls {...this.data} />:
-          React.createElement(Cls, this.data || {}),
-          this.find("span")
+          React.createElement(Cls, self.data || {}),
+          self.find("span")
         );
+        self.autorun(function (){
+          self._reactComponent.setProps(Template.currentData());
+        });
+
       });
 
       template.onDestroyed(function() {
