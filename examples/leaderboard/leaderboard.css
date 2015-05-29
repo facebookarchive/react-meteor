@@ -1,5 +1,5 @@
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-weight: 200;
     margin: 50px 0;
     padding: 0;
@@ -36,7 +36,7 @@ body {
 }
 
 .player.selected {
-    background-color: yellow;
+    background-color: rgb(136, 232, 140);
 }
 
 .player.selected .score {
@@ -46,7 +46,7 @@ body {
 .details, .none {
     font-weight: bold;
     font-size: 2em;
-    border-style: dashed none none none;
+    border-style: ridge none none none;
     border-color: #ccc;
     border-width: 4px;
     margin: 50px 10px;
