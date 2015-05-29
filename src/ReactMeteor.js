@@ -3,7 +3,6 @@ var ReactMeteorMixin = {
     var self = this;
 
     self._meteorStateDep = new Tracker.Dependency();
-    self._meteorFirstRun = true;
 
     if (Meteor.isClient) {
       Tracker.autorun(function(computation) {
@@ -23,6 +22,12 @@ var ReactMeteorMixin = {
       enqueueMeteorStateUpdate(self);
     }
   },
+  componentWillReceiveProps: function(nextProps) {
+    // always trigger change event for new props
+    if (this._meteorStateDep) {
+      this._meteorStateDep.changed();
+    }
+  };
 
   componentWillUpdate: function(nextProps, nextState) {
     if (this._meteorCalledSetState) {
@@ -56,20 +61,10 @@ function enqueueMeteorStateUpdate(component) {
     // triggering a state update.
     return;
   }
-
-  if (component._meteorFirstRun) {
-    // If it's the first time we've called enqueueMeteorStateUpdate since
-    // the component was mounted, set the state synchronously.
-    component._meteorFirstRun = false;
-    component._meteorCalledSetState = true;
-    component.setState(partialState);
-    return;
-  }
-
-  Tracker.afterFlush(function() {
-    component._meteorCalledSetState = true;
-    component.setState(partialState);
-  });
+  
+  component._meteorCalledSetState = true;
+  component.setState(partialState);
+  
 }
 
 // Like React.render, but it replaces targetNode, and works even if
