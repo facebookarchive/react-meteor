@@ -71,7 +71,7 @@ var MyComponent = React.createClass({
 
 The `startMeteorSubscriptions` method is optional, and should be
 implemented when the component needs to subscribe to specific query sets
-using [`Meteor.subscribe`](http://docs.meteor.com/#/full/meteor_subscribe)
+using [`Meteor.subscribe`](http://docs.meteor.com/#/full/meteor_subscribe).
 It will be called in a `Tracker.autorun` callback, so the subscriptions
 will be canceled automatically when the component is unmounted.
 
